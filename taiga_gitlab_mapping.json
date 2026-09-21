@@ -1,0 +1,9 @@
+{
+  "template_id": "HCR-C2-048",
+  "gitlab_project_id": 2387,
+  "scaffold_issue_iid": 293,
+  "impl_issues": [1,2,3,4,5,6,7,8,9,10,11,12],
+  "taiga_ids": [95186,95187,95188,95189,95190,95191,95192,95193,95194,95195,95196,95197],
+  "assigned_to": "tient3",
+  "synced_at": "2026-07-13"
+}

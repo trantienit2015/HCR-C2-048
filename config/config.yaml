@@ -1,0 +1,12 @@
+# Runtime parameters — loaded by AgentRegistry / cli.py, passed as Graph(config=...).
+# Separate file from config/agent.yaml (the static manifest). See CLAUDE.md §5.
+
+max_retry: 3
+timeout_s: 30
+
+# PMDA / formulary reference-corpus version tag (src/services/service.py).
+pmda_db_version: "2026.1"
+top_k: 5
+
+# Minimum weighted supplier score (0-100) for auto-approval routing.
+auto_approve_threshold: 80

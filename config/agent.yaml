@@ -1,0 +1,40 @@
+# Agent Manifest — AgentRegistry entry point
+# AgentRegistry reads every key below at ROOT level — do NOT nest under `agent:`
+# (that shape is invisible to the registry). See CLAUDE.md §5-0.
+id: "HCR-C2-048"
+name: "Medical Equipment & Pharma Procurement Compliance Agent"
+namespace: "hcr"
+version: "0.1.3"
+enabled: true
+category: "Cat 2"
+# The compliance verdicts and supplier ranking are deterministic rule/score
+# tables; the LLM only adds a free-text interpretation note.
+generation_mode: "deterministic"
+industry: "HCR"
+
+# Pattern reference only — the code inherits AgentBaseGraph (L1 direct).
+base_type: "RAGAgent"
+
+# Entry point — single dotted import path (module.Class), NOT split module:/class:.
+class: "src.graph.graph.Graph"
+
+# Security — S-1.
+# VERIFIED_EXTERNAL, not INTERNAL: the AGENTIC STAR Marketplace runner stamps
+# caller_trust_level=VERIFIED_EXTERNAL unconditionally
+# (shared/bootstrap/marketplace_app.py) and has no path that grants INTERNAL, so an
+# INTERNAL requirement is refused by the S-1 gate before execute() on every single
+# invocation — the agent could never run. Nothing here performs a privileged side
+# effect: the nodes validate input, consult reference tables and assemble a report.
+required_trust_level: "VERIFIED_EXTERNAL"
+
+# Compile-time gate — declare only secrets the code resolves via
+# ctx.secrets.require(). INVOKE_AUTH_TOKEN is NOT one: it is the standalone
+# entry-point caller-auth token, read from the process environment in
+# src/api/server.py before any InvocationContext exists (CLAUDE.md §3
+# "Entry-point exception"). Declaring it here would make require_at_compile()
+# hard-fail a Marketplace deployment that never sets it.
+requires:
+  secrets: []
+  extras: []
+
+# Runtime parameters live in config/config.yaml — not here.
